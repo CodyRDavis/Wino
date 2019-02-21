@@ -6,9 +6,16 @@ app.use((req,res,next) => {
     console.log("app used middleware...");
     next();
 })
+//MIDDLEWARE
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
-//routing - requie initRouting
+//routing - requrie initRouting
 require('./api/v1').initRouting(app)
+
+//services - require initSevices
+//mongodb - mongoose
+require('./api/v1/services/mongo').initMongo();
 
 //index
 app.get('/', (req, res, next) => {

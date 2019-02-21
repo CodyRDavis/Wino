@@ -1,6 +1,8 @@
+const controller = require('./users.controller');
+
 module.exports.initRoutes = (app) => {
 
-    app.post('/users', (req,res,next) => {
+    app.post('/users', controller.createUser, (req,res,next) => {
         res.status(200).json({
             success: true,
             message: "Connected to USERS API: post"
