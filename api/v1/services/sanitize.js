@@ -1,6 +1,6 @@
 module.exports.check = (req, res, next) => {
     data = req.body;
-    console.log(data);
+    //console.log(data);
 
     const emailRegex = /[a-zA-Z0-9]+@[a-zA-Z0-9\.]+.[a-zA-Z0-9]{2,4}/;
     const regex = /[a-zA-Z0-9\.\-]/;
@@ -13,7 +13,7 @@ module.exports.check = (req, res, next) => {
     for (var key in data){
         checksPerformed++;
 
-        console.log(data[key]);
+        //console.log(data[key]);
 
         //EMAIL has unique requirements so checking it uniquely
         if (key === "email") {

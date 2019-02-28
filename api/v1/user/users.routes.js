@@ -1,5 +1,5 @@
 const controller = require('./users.controller');
-const sanitize  = require('../services/sanitize');
+//const sanitize  = require('../services/sanitize');
 
 module.exports.initRoutes = (app) => {
 
