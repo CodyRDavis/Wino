@@ -26,6 +26,7 @@ module.exports.check = (req, res, next) => {
                 console.log("false from the email compare");
             }
         }
+        //checking incoming data for accepted characters
         else{
             if( data[key].match(regex) ){
                 console.log("true from the compare");
@@ -35,7 +36,7 @@ module.exports.check = (req, res, next) => {
                 console.log("false from the compair");
             }
         }
-    }
+    }//end for
     if(checksPerformed === checksPassed){
         next();
     }
@@ -46,6 +47,4 @@ module.exports.check = (req, res, next) => {
             message: "Forbidden characters found in "
         });
     }
-
-    
 }
