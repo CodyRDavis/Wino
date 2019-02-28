@@ -3,7 +3,7 @@ module.exports.check = (req, res, next) => {
     //console.log(data);
 
     const emailRegex = /[a-zA-Z0-9]+@[a-zA-Z0-9\.]+\.[a-zA-Z0-9]{2,4}/;
-    const regex = /[a-zA-Z0-9\.\-]/;
+    const regex = /\w/;
     const negativeRegex = /[\$\<\>\{\}\(\)]/;
 
     let checksPerformed = 0;
@@ -28,7 +28,7 @@ module.exports.check = (req, res, next) => {
         }
         //checking incoming data for accepted characters
         else{
-            if( data[key].match(regex) ){
+            if( data[key].match(regex) && !data[key].match(negativeRegex) ){
                 //console.log("true from the compare");
                 checksPassed++;
             }
@@ -45,7 +45,7 @@ module.exports.check = (req, res, next) => {
         res.status(200).json({
             success: false,
             error: 300,
-            message: "Data received was not in a usable format"
+            message: "Invalid data received"
         });
     }
 }
