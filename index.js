@@ -2,13 +2,10 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
-app.use((req,res,next) => {
-    console.log("app used middleware...");
-    next();
-})
 //MIDDLEWARE
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
+app.use(require('./api/v1/services/sanitize').check);
 
 //routing - requrie initRouting
 require('./api/v1').initRouting(app)
