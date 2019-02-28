@@ -20,11 +20,7 @@ test('Testing an email without the @ symbol', () => {
 
   sanitize(req, res, mockPassedCallback);
 
-  expect(mockResultJson.mock.calls[0][0]).toEqual({
-      success: false,
-      error: 300,
-      message: "Forbidden characters found in "
-  });
+  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
 })
 
 test('Testing an email without the . symbol', () => {
@@ -35,11 +31,7 @@ test('Testing an email without the . symbol', () => {
 
   sanitize(req, res, mockPassedCallback);
 
-  expect(mockResultJson.mock.calls[0][0]).toEqual({
-      success: false,
-      error: 300,
-      message: "Forbidden characters found in "
-  });
+  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
 })
 
 test('Testing an email without any symbols', () => {
@@ -50,11 +42,7 @@ test('Testing an email without any symbols', () => {
 
   sanitize(req, res, mockPassedCallback);
 
-  expect(mockResultJson.mock.calls[0][0]).toEqual({
-      success: false,
-      error: 300,
-      message: "Forbidden characters found in "
-  });
+  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
 })
 
 test('Testing an email with $ symbol', () => {
@@ -65,9 +53,5 @@ test('Testing an email with $ symbol', () => {
 
   sanitize(req, res, mockPassedCallback);
 
-  expect(mockResultJson.mock.calls[0][0]).toEqual({
-      success: false,
-      error: 300,
-      message: "Forbidden characters found in "
-  });
+  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
 })
