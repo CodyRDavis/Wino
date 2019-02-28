@@ -48,5 +48,4 @@ module.exports.check = (req, res, next) => {
             message: "Data received was not in a usable format"
         });
     }
-
 }
