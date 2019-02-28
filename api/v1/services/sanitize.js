@@ -2,7 +2,7 @@ module.exports.check = (req, res, next) => {
     data = req.body;
     //console.log(data);
 
-    const emailRegex = /[a-zA-Z0-9]+@[a-zA-Z0-9\.]+.[a-zA-Z0-9]{2,4}/;
+    const emailRegex = /[a-zA-Z0-9]+@[a-zA-Z0-9\.]+\.[a-zA-Z0-9]{2,4}/;
     const regex = /[a-zA-Z0-9\.\-]/;
     const negativeRegex = /[\$\<\>\{\}\(\)]/;
 
@@ -36,12 +36,8 @@ module.exports.check = (req, res, next) => {
                 //console.log("false from the compair");
             }
         }
-<<<<<<< HEAD
     }
 
-=======
-    }//end for
->>>>>>> e8e81e8c8272f730df273e5451aa9021467dc3c0
     if(checksPerformed === checksPassed){
         next();
     }
@@ -49,13 +45,8 @@ module.exports.check = (req, res, next) => {
         res.status(200).json({
             success: false,
             error: 300,
-            message: "Forbidden characters found in "
+            message: "Data received was not in a usable format"
         });
     }
-<<<<<<< HEAD
-
 
 }
-=======
-}
->>>>>>> e8e81e8c8272f730df273e5451aa9021467dc3c0
