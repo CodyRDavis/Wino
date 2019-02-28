@@ -1,6 +1,6 @@
 module.exports.check = (req, res, next) => {
     data = req.body;
-    console.log(data);
+    //console.log(data);
 
     const emailRegex = /[a-zA-Z0-9]+@[a-zA-Z0-9\.]+.[a-zA-Z0-9]{2,4}/;
     const regex = /[a-zA-Z0-9\.\-]/;
@@ -13,29 +13,30 @@ module.exports.check = (req, res, next) => {
     for (var key in data){
         checksPerformed++;
 
-        console.log(data[key]);
+        //console.log(data[key]);
 
         //EMAIL has unique requirements so checking it uniquely
         if (key === "email") {
             //checking to make sure email follows correct format, and doesnt contain forbidden characters
             if( data[key].match(emailRegex) && !data[key].match(negativeRegex)){
-                console.log("true from the email compare");
+                //console.log("true from the email compare");
                 checksPassed++;
             }
             else{
-                console.log("false from the email compare");
+                //console.log("false from the email compare");
             }
         }
         else{
             if( data[key].match(regex) ){
-                console.log("true from the compare");
+                //console.log("true from the compare");
                 checksPassed++;
             }
             else {
-                console.log("false from the compair");
+                //console.log("false from the compair");
             }
         }
     }
+
     if(checksPerformed === checksPassed){
         next();
     }
@@ -47,5 +48,5 @@ module.exports.check = (req, res, next) => {
         });
     }
 
-    
+
 }
