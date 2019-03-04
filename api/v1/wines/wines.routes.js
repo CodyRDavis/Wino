@@ -20,7 +20,7 @@ module.exports.initRoutes = (app) => {
       message: "Connected to WINES API: put"
     });
   });
-  app.delete('/users', controller.deleteWine, (req, res, next) => {
+  app.delete('/wines', controller.deleteWine, (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Connected to WINES API: delete"
