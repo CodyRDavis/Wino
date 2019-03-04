@@ -1,12 +1,10 @@
 const controller = require('./users.controller');
+//const sanitize  = require('../services/sanitize');
 
 module.exports.initRoutes = (app) => {
 
-    app.post('/users', controller.createUser, (req,res,next) => {
-        res.status(200).json({
-            success: true,
-            message: "Connected to USERS API: post"
-        });
+    app.post('/users', (req,res,next) => {
+        controller.createUser(req,res,next);
     });
     app.get('/users', (req,res,next) => {
         res.status(200).json({

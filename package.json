@@ -6,6 +6,10 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "verbose": true,
+    "testPathIgnorePatterns": ["<rootDir>/scraping-utils/"]
+  },    
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CodyRDavis/Wino.git"
