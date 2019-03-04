@@ -1,5 +1,6 @@
 const wineRoutes = require('./wines.routes.js')
 
+/*
 test('Testing good incoming request data - email format', () => {
 
   const req = {'body': {'email': 'thisemail@domain.com'}};
@@ -16,3 +17,4 @@ test('Test POST request for WINES API', () => {
   const res = {'status': ()=>{return {'json': ()=>{}};}};
 
 });
+*/

@@ -2,25 +2,25 @@ const controller = require('./wines.controller.js')
 
 module.exports.initRoutes = (app) => {
 
-  app.post('/wines', controller.createWine, (req, res, next) =>{
+  app.post('/wines', controller.updateWine, (req, res, next) =>{
     res.status(200).json({
       success: true,
       message: "Connected to WINES API: post"
     });
   });
-  app.get('/wines', (req, res, next) => {
+  app.get('/wines', controller.getWine, (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Connected to WINES API: get"
     });
   });
-  app.put('/wines', (req, res, next) => {
+  app.put('/wines', controller.createWine, (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Connected to WINES API: put"
     });
   });
-  app.delete('/users', (req, res, next) => {
+  app.delete('/users', controller.deleteWine, (req, res, next) => {
     res.status(200).json({
       success: true,
       message: "Connected to WINES API: delete"
