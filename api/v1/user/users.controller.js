@@ -44,11 +44,24 @@ controller.createUser = (req, res, next) => {
                             createdOn: Date.now(),
                             lastUpdate: Date.now()
                         })
+
+                        //saving new user to the database.
+                        newUser.save();
+
+                        //for develpment only- making sure newUser looks how its expected
                         console.log(newUser);
+                        //editing password to be unreadable before sending it off.
                         res.status(200).json({
                             success:true,
                             message: "new user",
-                            data: newUser
+                            data: {
+                                firstName: newUser.firstName,
+                                lastName: newUser.lastName,
+                                email: newUser.email,
+                                password: "**********",
+                                createdOn: newUser.createdOn,
+                                lastUpdate: newUser.lastUpdate
+                            }
                         })
                     }
                 })//end bcrypt
