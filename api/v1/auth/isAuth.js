@@ -25,6 +25,7 @@ isAuth.verify = (req, res, next) => {
             }
             else {
                 console.log(decoded);
+                req.user = decoded;
                 return next();
             }
         });
