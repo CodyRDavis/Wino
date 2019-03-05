@@ -5,6 +5,9 @@ const user = require('./users.model')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+//AUTH
+const isAuth = require ('../auth/isAuth');
+
 controller.createUser = (req, res, next) => {
     let data = req.body;
     let email = data.email.toLowerCase();
@@ -53,7 +56,7 @@ controller.createUser = (req, res, next) => {
                         //editing password to be unreadable before sending it off.
                         res.status(200).json({
                             success:true,
-                            message: "new user",
+                            message: "new user created",
                             data: {
                                 firstName: newUser.firstName,
                                 lastName: newUser.lastName,
@@ -68,6 +71,57 @@ controller.createUser = (req, res, next) => {
 
             }//end else
         })//end findone.then
+}
+
+controller.authUser = (req, res, next) => {
+    let data = req.body;
+    let email = data.email.toLowerCase();
+
+    //query database to find user
+    user.findOne({email: email})
+        .then( (result) => {
+            if (!result){
+                res.status(200).json({
+                    success: false,
+                    error: 400,
+                    messag: "Email or Password incorrect"
+                })
+            }
+            else {
+                bcrypt.compare(data.password, result.password)
+                    .then ( (result) => {
+                        console.log(result);
+                        if (!result){
+                            res.status(200).json({
+                                success: false,
+                                error: 400,
+                                message: "Email or Password incorrect"
+                            });
+                        }
+                        else {
+
+                            const payload = {
+                                admin: result.admin,
+                                email: result.email,
+                                firstName: result.firstName,
+                                lastName: result.lastName  
+                            };
+                            var token = isAuth.sign(payload);
+
+                            res.json({
+                                success: true,
+                                message: 'Log In successful',
+                                token: token
+                            });
+                        
+                        }//end else
+                    })//end bcrypt.compare then
+            }//end else
+        })
+}
+
+controller.testAuth = (req,res,next) => {
+    
 }
 
 module.exports = controller;
