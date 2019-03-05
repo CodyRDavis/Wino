@@ -133,8 +133,4 @@ controller.userLogin = (req, res, next) => {
     
 }
 
-controller.testAuth = (req,res,next) => {
-    
-}
-
 module.exports = controller;
