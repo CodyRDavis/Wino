@@ -8,9 +8,8 @@
   },
   "jest": {
     "verbose": true,
-    "testPathIgnorePatterns": [
-      "<rootDir>/scraping-utils/"
-    ]
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["<rootDir>/scraping-utils/"]
   },
   "repository": {
     "type": "git",
