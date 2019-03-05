@@ -10,7 +10,7 @@
     "verbose": true,
     "testEnvironment": "node",
     "testPathIgnorePatterns": ["<rootDir>/scraping-utils/"]
-  },    
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CodyRDavis/Wino.git"
@@ -24,6 +24,7 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.14"
   },
   "devDependencies": {

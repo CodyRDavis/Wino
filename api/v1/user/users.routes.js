@@ -1,15 +1,16 @@
 const controller = require('./users.controller');
-//const sanitize  = require('../services/sanitize');
+
+const isAuth = require('../auth/isAuth');
 
 module.exports.initRoutes = (app) => {
 
     app.post('/users', (req,res,next) => {
         controller.createUser(req,res,next);
     });
-    app.get('/users', (req,res,next) => {
+    app.get('/users', isAuth.verify, (req,res,next) => {
         res.status(200).json({
-            success: true,
-            message: "Connected to USERS API: get"
+            success: false,
+            message: "Connected to Users API: get"
         });
     });
     app.put('/users', (req,res,next) => {
@@ -23,5 +24,8 @@ module.exports.initRoutes = (app) => {
             success: true,
             message: "Connected to USERS API: delete"
         });
+    });
+    app.post('/login', (req,res,next) => {
+        controller.authUser(req,res,next);
     });
 }
