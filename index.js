@@ -8,7 +8,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(require('./api/v1/services/sanitize').check);
 
-
 //some config stuff
 app.set('superSecret', config.secret);
 

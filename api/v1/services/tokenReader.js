@@ -1,16 +1,12 @@
 
-const checkToken = (req, res, next) => {
+module.exports.checkToken = (req, res, next) => {
 
-    const header = req.headers['authorization'];
-
-    if(typeof header !== 'undefined') {
-        const bearer = header.split(' ');
-        const token = bearer[1];
-
-        req.token = token;
+    const authHeader = req.headers['authorization'];
+    console.log (req.headers);
+    console.log("Checking token",authHeader);
+    if(typeof authHeader !== 'undefined') {
+        return authHeader;
     }
+    return null;
 
-    next();
 }
-
-modeul.export = checkToken

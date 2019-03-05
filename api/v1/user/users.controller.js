@@ -79,8 +79,8 @@ controller.authUser = (req, res, next) => {
 
     //query database to find user
     user.findOne({email: email})
-        .then( (result) => {
-            if (!result){
+        .then( (dbResult) => {
+            if (!dbResult){
                 res.status(200).json({
                     success: false,
                     error: 400,
@@ -88,10 +88,11 @@ controller.authUser = (req, res, next) => {
                 })
             }
             else {
-                bcrypt.compare(data.password, result.password)
-                    .then ( (result) => {
-                        console.log(result);
-                        if (!result){
+                bcrypt.compare(data.password, dbResult.password)
+                    .then ( (compareResult) => {
+                        console.log ("inside bcrypt compare...")
+                        console.log(dbResult);
+                        if (!compareResult){
                             res.status(200).json({
                                 success: false,
                                 error: 400,
@@ -101,11 +102,12 @@ controller.authUser = (req, res, next) => {
                         else {
 
                             const payload = {
-                                admin: result.admin,
-                                email: result.email,
-                                firstName: result.firstName,
-                                lastName: result.lastName  
+                                admin: dbResult.admin,
+                                email: dbResult.email,
+                                firstName: dbResult.firstName,
+                                lastName: dbResult.lastName  
                             };
+                            console.log(payload);
                             var token = isAuth.sign(payload);
 
                             res.json({
