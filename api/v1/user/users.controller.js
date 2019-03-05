@@ -73,53 +73,64 @@ controller.createUser = (req, res, next) => {
         })//end findone.then
 }
 
-controller.authUser = (req, res, next) => {
+controller.userLogin = (req, res, next) => {
     let data = req.body;
-    let email = data.email.toLowerCase();
-
-    //query database to find user
-    user.findOne({email: email})
-        .then( (dbResult) => {
-            if (!dbResult){
-                res.status(200).json({
-                    success: false,
-                    error: 400,
-                    messag: "Email or Password incorrect"
-                })
-            }
-            else {
-                bcrypt.compare(data.password, dbResult.password)
-                    .then ( (compareResult) => {
-                        console.log ("inside bcrypt compare...")
-                        console.log(dbResult);
-                        if (!compareResult){
-                            res.status(200).json({
-                                success: false,
-                                error: 400,
-                                message: "Email or Password incorrect"
-                            });
-                        }
-                        else {
-
-                            const payload = {
-                                admin: dbResult.admin,
-                                email: dbResult.email,
-                                firstName: dbResult.firstName,
-                                lastName: dbResult.lastName  
-                            };
-                            console.log(payload);
-                            var token = isAuth.sign(payload);
-
-                            res.json({
-                                success: true,
-                                message: 'Log In successful',
-                                token: token
-                            });
-                        
-                        }//end else
-                    })//end bcrypt.compare then
-            }//end else
+    
+    //checking for necessary info before attempting to log in
+    if (data.email == null || data.password == null) {
+        res.status(400).json({
+            success: false,
+            error: 400,
+            message: "Unauthorized: Email or Password incorrect."
         })
+    }
+    else {
+        let email = data.email.toLowerCase();
+            //query database to find user
+            user.findOne({email: email})
+                .then( (dbResult) => {
+                    if (!dbResult){
+                        res.status(200).json({
+                            success: false,
+                            error: 400,
+                            messag: "Email or Password incorrect"
+                        })
+                    }
+                    else {
+                        bcrypt.compare(data.password, dbResult.password)
+                            .then ( (compareResult) => {
+                                console.log ("inside bcrypt compare...")
+                                console.log(dbResult);
+                                if (!compareResult){
+                                    res.status(200).json({
+                                        success: false,
+                                        error: 400,
+                                        message: "Email or Password incorrect"
+                                    });
+                                }
+                                else {
+
+                                    const payload = {
+                                        admin: dbResult.admin,
+                                        email: dbResult.email,
+                                        firstName: dbResult.firstName,
+                                        lastName: dbResult.lastName  
+                                    };
+                                    console.log(payload);
+                                    var token = isAuth.sign(payload);
+
+                                    res.json({
+                                        success: true,
+                                        message: 'Log In successful',
+                                        token: token
+                                    });
+                                
+                                }//end else
+                            })//end bcrypt.compare then
+                    }//end else
+                });//end findOne then
+    }
+    
 }
 
 controller.testAuth = (req,res,next) => {
