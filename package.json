@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "mocha ./**/*.test.js"
   },
-  "jest": {
-    "verbose": true,
-    "testEnvironment": "node",
-    "testPathIgnorePatterns": ["<rootDir>/scraping-utils/"]
+  "mocha": {
+    "recursive": true,
+    "exclude": [
+      "<rootDir>/scraping-utils/",
+      "<rootDir>/node_modules/"
+    ]
   },
   "repository": {
     "type": "git",
@@ -23,9 +25,12 @@
   "homepage": "https://github.com/CodyRDavis/Wino#readme",
   "dependencies": {
     "bcrypt": "^3.0.4",
+    "chai": "^4.2.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
-    "mongoose": "^5.4.14"
+    "mocha": "^6.0.2",
+    "mongoose": "^5.4.14",
+    "nock": "^10.0.6"
   },
   "devDependencies": {
     "jest": "^24.1.0"
