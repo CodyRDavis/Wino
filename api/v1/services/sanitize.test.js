@@ -1,79 +1,110 @@
 const sanitize = require('./sanitize').check;
+const assert = require('chai').assert
 
-test('Testing good incoming request data - email format', () => {
 
-  const req = {'body': {'email': 'thisemail@domain.com'}};
-  const res = {'status': ()=>{return {'json': ()=>{}};}};
-  mockPassedCallback = jest.fn();
-  mockPassedCallback.mockReturnValue(true);
+describe("Sanitization", function() {
 
-  sanitize(req, res, mockPassedCallback);
+  it("Should allow well formmated email addresses", function(done) {
+    const req = {'body': {'email': 'thisemail@domain.com'}};
+    const res = {'status': ()=>{return {'json': ()=>{}};}};
 
-  expect(mockPassedCallback.mock.results[0].value).toBe(true)
+    sanitize(req, res, done);
+
+  });
+
+  it("Should not allow emails without an @ symbol", function() {
+    const req = {'body': {'email': 'thisemaildomain.com'}};
+    const checkCallback = {"success": true};
+    const res = {
+      'status': ()=>{
+        return {
+          'json': (json) => {
+            checkCallback.success = json.success;
+          }
+        }
+      }
+    };
+
+  sanitize(req, res, () => {});
+  return assert.equal(checkCallback.success, false);
+  });
+
+  it("Should not allow emails without an . symbol", function() {
+    const req = {'body': {'email': 'thisemail@domaincom'}};
+    const checkCallback = {"success": true};
+    const res = {
+      'status': ()=>{
+        return {
+          'json': (json) => {
+            checkCallback.success = json.success;
+          }
+        }
+      }
+    };
+
+  sanitize(req, res, () => {});
+  return assert.equal(checkCallback.success, false);
+  });
+
+  it("Should not allow emails without symbols", function() {
+    const req = {'body': {'email': 'thisemaildomaincom'}};
+    const checkCallback = {"success": true};
+    const res = {
+      'status': ()=>{
+        return {
+          'json': (json) => {
+            checkCallback.success = json.success;
+          }
+        }
+      }
+    };
+
+  sanitize(req, res, () => {});
+  return assert.equal(checkCallback.success, false);
+  });
+
+  it("Should not allow emails with an $ symbol", function() {
+    const req = {'body': {'email': '$thisemaildomaincom'}};
+    const checkCallback = {"success": true};
+    const res = {
+      'status': ()=>{
+        return {
+          'json': (json) => {
+            checkCallback.success = json.success;
+          }
+        }
+      }
+    };
+
+  sanitize(req, res, () => {});
+  return assert.equal(checkCallback.success, false);
+  });
+
+  it("Should allow well formatted incoming request data", function() {
+    const req = {'body': {'blorb': 'string123ofChars8937'}};
+    const res = {'status': ()=>{return {'json': ()=>{}};}};
+    const checkCallback = {"success": false};
+
+    sanitize(req, res, () => {checkCallback.success = true;});
+
+    return assert.equal(checkCallback.success, true);
+  });
+
+  it("Should not allow incoming request data with the $ symbol", function() {
+    const req = {'body': {'blorb': '$string123ofChars8937'}};
+    const checkCallback = {"success": true};
+    const res = {
+      'status': ()=>{
+        return {
+          'json': (json) => {
+            checkCallback.success = json.success;
+          }
+        }
+      }
+    };
+
+    sanitize(req, res, () => {});
+
+    return assert.equal(checkCallback.success, false);
+  });
 });
-
-test('Testing bad incoming request data - no @ in email format', () => {
-  const req = {'body': {'email': 'thisemaildomain.com'}};
-  mockResultJson = jest.fn();
-  const res = {'status': ()=>{return {'json': mockResultJson};}};
-  mockPassedCallback = jest.fn();
-
-  sanitize(req, res, mockPassedCallback);
-
-  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
-})
-
-test('Testing bad incoming request data - no . in email format', () => {
-  const req = {'body': {'email': 'thisemail@domaincom'}};
-  mockResultJson = jest.fn();
-  const res = {'status': ()=>{return {'json': mockResultJson};}};
-  mockPassedCallback = jest.fn();
-
-  sanitize(req, res, mockPassedCallback);
-
-  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
-})
-
-test('Testing bad incoming request data - no symbols in email format', () => {
-  const req = {'body': {'email': 'thisemaildomaincom'}};
-  mockResultJson = jest.fn();
-  const res = {'status': ()=>{return {'json': mockResultJson};}};
-  mockPassedCallback = jest.fn();
-
-  sanitize(req, res, mockPassedCallback);
-
-  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
-})
-
-test('Testing bad incoming request data - $ in email format', () => {
-  const req = {'body': {'email': '$thisemail@domaincom'}};
-  mockResultJson = jest.fn();
-  const res = {'status': ()=>{return {'json': mockResultJson};}};
-  mockPassedCallback = jest.fn();
-
-  sanitize(req, res, mockPassedCallback);
-
-  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
-})
-
-test('Testing good incoming request data - not email', () => {
-  const req = {'body': {'blorb': 'string123ofChars8937'}};
-  const res = {'status': ()=>{return {'json': ()=>{}};}};
-  mockPassedCallback = jest.fn();
-  mockPassedCallback.mockReturnValue(true);
-
-  sanitize(req, res, mockPassedCallback);
-
-  expect(mockPassedCallback.mock.results[0].value).toBe(true)
-})
-
-test('Testing bad incoming request data - $ in data and not email', () => {
-  const req = {'body': {'blorb': '$string123ofChars8937'}};
-  mockResultJson = jest.fn();
-  const res = {'status': ()=>{return {'json': mockResultJson};}};
-  mockPassedCallback = jest.fn();
-
-  sanitize(req, res, mockPassedCallback);
-
-  expect(mockResultJson.mock.calls[0][0].success).toEqual(false);
-})
