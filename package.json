@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./**/*.test.js"
+    "test": "mocha './{,!(node_modules)/**}/*.test.js'"
   },
   "mocha": {
     "recursive": true,
@@ -26,6 +26,7 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
     "mocha": "^6.0.2",
