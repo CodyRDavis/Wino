@@ -1,29 +1,18 @@
 const controller = require('./wines.controller.js')
+const isAuth = require('../auth/isAuth').verify
 
 module.exports.initRoutes = (app) => {
 
-  app.post('/wines', controller.updateWine, (req, res, next) =>{
-    res.status(200).json({
-      success: true,
-      message: "Connected to WINES API: post"
-    });
+  app.put('/wines', isAuth, (req, res, next) =>{
+    controller.updateWine(req, res, next);
   });
-  app.get('/wines', controller.getWine, (req, res, next) => {
-    res.status(200).json({
-      success: true,
-      message: "Connected to WINES API: get"
-    });
+  app.get('/wines', isAuth, (req, res, next) => {
+    controller.getWine(req, res, next);
   });
-  app.put('/wines', controller.createWine, (req, res, next) => {
-    res.status(200).json({
-      success: true,
-      message: "Connected to WINES API: put"
-    });
+  app.post('/wines', isAuth, (req, res, next) => {
+    controller.createWine(req, res, next);
   });
-  app.delete('/wines', controller.deleteWine, (req, res, next) => {
-    res.status(200).json({
-      success: true,
-      message: "Connected to WINES API: delete"
-    });
+  app.delete('/wines', isAuth, (req, res, next) => {
+    controller.deleteWine(req, res, next);
   });
 }

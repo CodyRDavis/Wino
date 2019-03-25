@@ -28,7 +28,7 @@ module.exports.check = (req, res, next) => {
         }
         //checking incoming data for accepted characters
         else{
-            if( data[key].match(regex) && !data[key].match(negativeRegex) ){
+            if(typeof(data[key]) != "object" && data[key].match(regex) && !data[key].match(negativeRegex) ){
                 //console.log("true from the compare");
                 checksPassed++;
             }

@@ -13,7 +13,6 @@ isAuth.sign = (payload) => {
 isAuth.verify = (req, res, next) => {
     //creating req.token for access later
     req.token = tokenReader.checkToken(req);
-
     if (req.token){
         jwt.verify(req.token, config.secret, function(err, decoded) {
             if (err){

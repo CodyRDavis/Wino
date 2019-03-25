@@ -1,5 +1,5 @@
 const sanitize = require('./sanitize').check;
-const assert = require('chai').assert
+const assert = require('chai').assert;
 
 
 describe("Sanitization", function() {
