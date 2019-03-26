@@ -1,22 +1,23 @@
 const mongoose = require('mongoose');
 
 const Wine = mongoose.model('Wine', {
-  imageURL: String,
-  vendorURLS: [String],
-  criticReviewURlS: [String],
+  officalImageURI: String,
+  userImageURIs:[String],
+  vendorURLs: [String],
+  criticReviewURls: [String],
   producerURL: String,
   flavorNoteTags: [{flavor: String, frequency: Number}],
   wineCategory: String,
   wineRegion: String,
-  wineTitle: String,
+  wineTitle: {type:String, required:true},
   wineOrigin: String,
-  wineProducer: String,
+  wineProducer: {type:String, required:true, default:"Unknown"},
   wineContent: String,
-  wineVintage: Date,
+  wineVintage: {type:String, required:true, default:"Unknown"},
   avgUsrRating: Number,
   weightedAvgPrice: Number,
-  createdOn: Date,
-  lastUpdate: Date
+  createdOn: {type:Date, default:Date.now},
+  lastUpdate: {type:Date, default:Date.now}
 });
 
 module.exports = Wine;

@@ -25,7 +25,7 @@ module.exports.initRoutes = (app) => {
             message: "Connected to USERS API: delete"
         });
     });
-    app.post('/login', isAuth, (req,res,next) => {
+    app.post('/login', (req,res,next) => {
         controller.userLogin(req,res,next);
     });
 }
