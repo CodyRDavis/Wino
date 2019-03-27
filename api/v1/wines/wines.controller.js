@@ -4,10 +4,10 @@ const wines = require('./wines.model');
 controller.updateWine = (req, res, next) => {
   let data = req.body;
   data.wineUpdate.lastUpdate = Date.now()
-  console.log("updateWine request body:" + req.body);
+  console.log("updateWine request body:", req.body);
   //check to see if in db
   wines.findOneAndUpdate(
-    {wineTitle:data.wineTitle, wineVintage:data.wineVintage, wineProducer:data.wineProducer},
+    {wineTitle: data.wineTitle, wineVintage: data.wineVintage, wineProducer: data.wineProducer},
     {$set: data.wineUpdate},
     {new:true},
     (err, result) => {
