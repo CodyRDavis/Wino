@@ -7,7 +7,7 @@ controller.updateWine = (req, res, next) => {
   console.log("updateWine request body:", req.body);
   //check to see if in db
   wines.findOneAndUpdate(
-    {wineTitle: data.wineTitle, wineVintage: data.wineVintage, wineProducer: data.wineProducer},
+    {_id: data._id},
     {$set: data.wineUpdate},
     {new:true},
     (err, result) => {
