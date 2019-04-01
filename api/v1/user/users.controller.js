@@ -111,6 +111,7 @@ controller.userLogin = (req, res, next) => {
                                 else {
 
                                     const payload = {
+                                        id: dbResult._id,
                                         admin: dbResult.admin,
                                         email: dbResult.email,
                                         firstName: dbResult.firstName,
