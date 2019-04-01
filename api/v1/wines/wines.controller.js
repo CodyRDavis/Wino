@@ -4,15 +4,15 @@ const wines = require('./wines.model');
 controller.updateWine = (req, res, next) => {
   let data = req.body;
   data.wineUpdate.lastUpdate = Date.now()
-  console.log("updateWine request body:", req.body);
+  //console.log("updateWine request body:", req.body);
   //check to see if in db
   wines.findOneAndUpdate(
     {_id: data._id},
     {$set: data.wineUpdate},
     {new:true},
     (err, result) => {
-      console.log("Error: ", err)
-      console.log("Result: ", result)
+      //console.log("Error: ", err)
+      //console.log("Result: ", result)
       if (err) {
         //if there was an error, return an uncsuccessful response with the error code
         res.status(400).json({
@@ -24,7 +24,8 @@ controller.updateWine = (req, res, next) => {
         //with the updated record
         res.status(200).json({
           success:true,
-          data:result
+          data:result,
+          mesage:""
         });
       } else {
         //if no record in the database was updated, return an unsuccessful response
