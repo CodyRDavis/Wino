@@ -2,7 +2,7 @@ const controller = {}
 const wines = require('./wines.model');
 
 controller.updateWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   data.wineUpdate.lastUpdate = Date.now()
   console.log("updateWine request body:", req.body);
   //check to see if in db
@@ -42,11 +42,11 @@ controller.getWine = (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Connected to WINES API: put"
+    message: "Connected to WINES API: read"
   });
 };
 controller.createWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("createWine request body:" + req.body);
 
   //search to see if wine already exists

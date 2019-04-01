@@ -9,7 +9,7 @@ const saltRounds = 10;
 const isAuth = require ('../auth/isAuth');
 
 controller.createUser = (req, res, next) => {
-    let data = req.body;
+    let data = req.body.data;
     let email = data.email.toLowerCase();
     
     //checking to see if email already exists in the Database
@@ -74,7 +74,7 @@ controller.createUser = (req, res, next) => {
 }
 
 controller.userLogin = (req, res, next) => {
-    let data = req.body;
+    let data = req.body.data;
     
     //checking for necessary info before attempting to log in
     if (data.email == null || data.password == null) {
