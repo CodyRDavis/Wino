@@ -37,7 +37,7 @@ controller.updateWine = (req, res, next) => {
     });
 };
 controller.getWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("getWine request body:" + req.body);
 
   res.status(200).json({
@@ -84,7 +84,7 @@ controller.createWine = (req, res, next) => {
   });
 };
 controller.deleteWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("deleteWine request body:" + req.body);
   res.status(200).json({
     success: true,
