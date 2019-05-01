@@ -29,9 +29,14 @@ describe("Wine Controller Update", function() {
     const wine = new wineModel({'wineTitle':'testTitle'});
     wine.save(function (error, wine) {
 
-      const req = {'body':{
-        '_id':wine.id,
-        'wineUpdate':{'wineVintage':'1992'}}};
+      const req = {
+        'body': {
+          'data': {
+            '_id':wine.id,
+            'wineUpdate':{'wineVintage':'1992'}
+          }
+        }
+      }
 
       const res = {
         'status': ()=>{

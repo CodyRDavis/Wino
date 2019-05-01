@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 
 
 controller.updateWine = (req, res, next) => {
-  
+
   let data = req.body.data;
   data.wineUpdate.lastUpdate = Date.now()
-  console.log("updateWine request body:", req.body);
 
   //check to see if in db
   wines.findByIdAndUpdate(
