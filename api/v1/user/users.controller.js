@@ -9,7 +9,7 @@ const saltRounds = 10;
 const isAuth = require ('../auth/isAuth');
 
 controller.createUser = (req, res, next) => {
-    let data = req.body;
+    let data = req.body.data;
     let email = data.email.toLowerCase();
     
     //checking to see if email already exists in the Database
@@ -74,7 +74,7 @@ controller.createUser = (req, res, next) => {
 }
 
 controller.userLogin = (req, res, next) => {
-    let data = req.body;
+    let data = req.body.data;
     
     //checking for necessary info before attempting to log in
     if (data.email == null || data.password == null) {
@@ -82,7 +82,7 @@ controller.userLogin = (req, res, next) => {
             success: false,
             error: 400,
             message: "Unauthorized: Email or Password incorrect."
-        })
+        });
     }
     else {
         let email = data.email.toLowerCase();
@@ -111,6 +111,7 @@ controller.userLogin = (req, res, next) => {
                                 else {
 
                                     const payload = {
+                                        id: dbResult._id,
                                         admin: dbResult.admin,
                                         email: dbResult.email,
                                         firstName: dbResult.firstName,
@@ -131,6 +132,24 @@ controller.userLogin = (req, res, next) => {
                 });//end findOne then
     }
     
+}
+
+controller.deleteUser = (req, res, next) => {
+    const data = req.body.data;
+
+    if( data._id === req.token._id) {
+        res.status(200).json({
+            success: true,
+            message: "I want to delete User: " + req.token._id
+        });
+    }
+    else{
+        res.status(200).json({
+            success: false,
+            error: "500",
+            message: "Unauthorized Access: User does not have permission to do this action." 
+        });
+    }
 }
 
 module.exports = controller;

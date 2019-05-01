@@ -6,7 +6,7 @@ const Wine = mongoose.model('Wine', {
   officalImageURI: String,
   userImageURIs:[String],
   vendorURLs: [String],
-  criticReviewURls: [String],
+  criticReviewURLs: [String],
   producerURL: String,
   flavorNoteTags: [{flavor: String, frequency: Number}],
   wineCategory: String,

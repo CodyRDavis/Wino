@@ -1,0 +1,60 @@
+USER V1
+    CREATE - post /users
+        {
+            data: {
+                email:
+                firstName:
+                lastName:
+                password: (to be hashed),
+            }
+        }
+    READ - get /users
+        TODO
+    UPDATE - put /users
+        TODO
+    DELETE - delete/users
+        TODO
+
+Wine v1
+    CREATE - post /wines
+        {
+            data:{
+                WineTitle:
+                wineOrigin:
+                wineProducer:
+                wineContent:
+                wineVintage:
+                wineCategory:
+                userImageURIs:
+                //TODO LOOK OVER THIS AGAIN
+                //ONLY CERTAIN THINGS SHOULD BE DEFINED HERE
+            }
+        }
+    READ - get /wines
+        TODO
+    UPDATE - post /wines
+        {
+            data: {
+                id:
+            }
+        }
+    DELETE - delte /wines4
+        TODO
+
+
+Reviews V1
+    CREATE
+    READ
+    UPDATE
+    DELETE
+
+
+MISC v1
+
+    LOGIN - post /login
+        {
+            data: {
+                email:
+                password:
+            }
+        }
