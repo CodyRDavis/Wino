@@ -12,7 +12,6 @@ describe("Wine Controller Update", function() {
     mongoose.connection
       .once('open', () => {})
       .on('error', (error) => {
-        //console.warn("Error: ", error)
       });
   });
 
@@ -20,36 +19,34 @@ describe("Wine Controller Update", function() {
     mongoose.disconnect();
   });
 
-  // beforeEach("Clean the database before the next test", function(done) {
-  //   mongoose.connection.dropCollection('wines', (error) => {
-  //     //console.warn("Error: ", error);
-  //     done();
-  //   });
-  // });
+  beforeEach("Clean the database before the next test", function(done) {
+    mongoose.connection.dropCollection('wines', (error) => {
+      done();
+    });
+  });
 
   it("If record exists then output is the updated record", function(done) {
     const wine = new wineModel({'wineTitle':'testTitle'});
     wine.save(function (error, wine) {
-      //console.warn("Error: ", error)
-      console.log(wine.id);
-    });
-    const req = {'body':{
-      '_id':wine.id,
-      'wineUpdate':{'wineVintage':'1992'}}};
-    const res = {
-      'status': ()=>{
-        return {'json': (jsonRes)=>{
-          console.log(jsonRes);
-          done();
-          }
-        };
-      }
-    };
 
-    console.log(mongoose.Types.ObjectId(wine._id));
-    controller.updateWine(req, res, ()=>{});
+      const req = {'body':{
+        '_id':wine.id,
+        'wineUpdate':{'wineVintage':'1992'}}};
+
+      const res = {
+        'status': ()=>{
+          return {'json': (jsonRes)=>{
+            assert.equal(jsonRes.data.wineVintage, '1992');
+            done();
+            }
+          };
+        }
+      };
+
+      controller.updateWine(req, res, ()=>{});
+
+    })
   });
-
 });
 
   // it("should handle an update request", function() {
