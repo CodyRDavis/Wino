@@ -3,37 +3,50 @@ const wineModel = require('./wines.model');
 const mongoose = require('mongoose');
 const assert = require('chai').assert;
 
+mongoose.set('useFindAndModify', false);
+
 describe("Wine Controller Update", function() {
 
-  before(function(){
+  before("Connect to the test database", function(){
     mongoose.connect('mongodb://localhost/testDB', {useNewUrlParser: true});
+    mongoose.connection
+      .once('open', () => {})
+      .on('error', (error) => {
+      });
   });
 
-  after(function(){
+  after("Disconnect politely from the test database", function(){
     mongoose.disconnect();
   });
 
-  it("If record exists then output is the updated record", function() {
-    const wine = new wineModel({'wineTitle':'testTitle'});
-    const req = {'body':{
-      'wineTitle':'testTitle',
-      'wineUpdate':{'wineVintage':'1992'}}}
-    const result = {'success':false, data:{}}
-    const res = {
-      'status': ()=>{
-        return {'json': (jsonRes)=>{
-          result.success = jsonRes.success;
-          result.data = jsonRes.data;
-          }
-        };
-      }
-    };
-    wine.save()
-
-    controller.updateWine(req, res, ()=>{});
-    console.log(result.data)
+  beforeEach("Clean the database before the next test", function(done) {
+    mongoose.connection.dropCollection('wines', (error) => {
+      done();
+    });
   });
 
+  it("If record exists then output is the updated record", function(done) {
+    const wine = new wineModel({'wineTitle':'testTitle'});
+    wine.save(function (error, wine) {
+
+      const req = {'body':{
+        '_id':wine.id,
+        'wineUpdate':{'wineVintage':'1992'}}};
+
+      const res = {
+        'status': ()=>{
+          return {'json': (jsonRes)=>{
+            assert.equal(jsonRes.data.wineVintage, '1992');
+            done();
+            }
+          };
+        }
+      };
+
+      controller.updateWine(req, res, ()=>{});
+
+    })
+  });
 });
 
   // it("should handle an update request", function() {

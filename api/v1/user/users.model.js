@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+mongoose.set('useFindAndModify', false);
+
 const User = mongoose.model('User', {
     admin: {Types: Number, default: 0},
     firstName: String,

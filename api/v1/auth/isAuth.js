@@ -23,7 +23,7 @@ isAuth.verify = (req, res, next) => {
                 });
             }
             else {
-                //console.log(decoded);
+                console.log("Decoded: ", decoded);
                 req.user = decoded;
                 return next();
             }

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.set('useFindAndModify', false);
+
 const Wine = mongoose.model('Wine', {
   officalImageURI: String,
   userImageURIs:[String],
