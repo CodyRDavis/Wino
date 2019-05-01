@@ -4,8 +4,11 @@ const mongoose = require('mongoose');
 
 
 controller.updateWine = (req, res, next) => {
-  let data = req.body;
-  data.wineUpdate.lastUpdate = Date.now();
+  
+  let data = req.body.data;
+  data.wineUpdate.lastUpdate = Date.now()
+  console.log("updateWine request body:", req.body);
+
   //check to see if in db
   wines.findByIdAndUpdate(
     {_id: data._id},
@@ -37,16 +40,16 @@ controller.updateWine = (req, res, next) => {
     });
 };
 controller.getWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("getWine request body:" + req.body);
 
   res.status(200).json({
     success: true,
-    message: "Connected to WINES API: put"
+    message: "Connected to WINES API: read"
   });
 };
 controller.createWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("createWine request body:" + req.body);
 
   //search to see if wine already exists
@@ -84,7 +87,7 @@ controller.createWine = (req, res, next) => {
   });
 };
 controller.deleteWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("deleteWine request body:" + req.body);
   res.status(200).json({
     success: true,
