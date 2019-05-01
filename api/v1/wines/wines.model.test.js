@@ -7,11 +7,23 @@ describe("Wine Model", function() {
 
   before(function(){
     mongoose.connect('mongodb://localhost/testDB', {useNewUrlParser: true});
+    mongoose.connection
+      .once('open', () => {})
+      .on('error', (error) => {
+        //console.warn("Error: ", error)
+      });
   });
 
   after(function(){
     mongoose.disconnect();
   });
+
+  // beforeEach("Clean the database before the next test", function(done) {
+  //   mongoose.connection.dropCollection('wines', (error) => {
+  //     //console.warn("Error: ", error);
+  //     done();
+  //   });
+  // });
 
   it("Test wineTitle is required", function (done) {
     const wine = new wineSchema({});
