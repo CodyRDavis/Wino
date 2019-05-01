@@ -5,7 +5,11 @@ const isAuth = require('../auth/isAuth').verify;
 module.exports.initRoutes = (app) => {
 
     app.post('/reviews', (req,res,next) => {
-        controller.createReview(req,res,next);
+        //controller.createReview(req,res,next);
+        res.status(200).json({
+            success:true,
+            message: "Connected to REVIEWS API: POST"
+        });
     });
     app.get('/reviews', isAuth, (req, res, next) => {
         res.status(200).json({
