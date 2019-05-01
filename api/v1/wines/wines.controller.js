@@ -1,18 +1,20 @@
 const controller = {}
 const wines = require('./wines.model');
+const mongoose = require('mongoose');
+
 
 controller.updateWine = (req, res, next) => {
-  let data = req.body;
+  
+  let data = req.body.data;
   data.wineUpdate.lastUpdate = Date.now()
   console.log("updateWine request body:", req.body);
+
   //check to see if in db
-  wines.findOneAndUpdate(
-    {wineTitle: data.wineTitle, wineVintage: data.wineVintage, wineProducer: data.wineProducer},
+  wines.findByIdAndUpdate(
+    {_id: data._id},
     {$set: data.wineUpdate},
     {new:true},
     (err, result) => {
-      console.log("Error: ", err)
-      console.log("Result: ", result)
       if (err) {
         //if there was an error, return an uncsuccessful response with the error code
         res.status(400).json({
@@ -24,7 +26,8 @@ controller.updateWine = (req, res, next) => {
         //with the updated record
         res.status(200).json({
           success:true,
-          data:result
+          data:result,
+          mesage:""
         });
       } else {
         //if no record in the database was updated, return an unsuccessful response
@@ -37,16 +40,16 @@ controller.updateWine = (req, res, next) => {
     });
 };
 controller.getWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("getWine request body:" + req.body);
 
   res.status(200).json({
     success: true,
-    message: "Connected to WINES API: put"
+    message: "Connected to WINES API: read"
   });
 };
 controller.createWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("createWine request body:" + req.body);
 
   //search to see if wine already exists
@@ -84,7 +87,7 @@ controller.createWine = (req, res, next) => {
   });
 };
 controller.deleteWine = (req, res, next) => {
-  let data = req.body;
+  let data = req.body.data;
   console.log("deleteWine request body:" + req.body);
   res.status(200).json({
     success: true,
