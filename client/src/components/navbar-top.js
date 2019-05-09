@@ -10,13 +10,17 @@ class Navbar extends Component {
     render() {
         return(
             <div className="navbar">
-                <h1>Wino</h1>
-                <ul className="topnav">
-                    <li><a className="active" href="#home">Home</a></li>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li className="right"><a href="#about">About</a></li>
-                </ul>
+                <div className="branding-container">
+                    <h1 className="title">Wino</h1>
+                    <button className="hamburger">#</button>
+                </div>
+                
+                <div className="menu-container">
+                    <ul className="topnav">
+                        <li><a href="#">Item 1</a></li>
+                        <li><a href="#">Item 2</a></li>
+                    </ul>
+                </div>
             </div>
         )
     }
